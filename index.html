@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulasi TKA Kelas IX — Literasi Membaca (30 Soal Objektif)</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-hover: #1d4ed8;
+      --primary-light: #dbeafe;
+      --secondary: #0f766e;
+      --accent: #d97706;
+      --accent-light: #fef3c7;
+      --success: #15803d;
+      --success-light: #dcfce7;
+      --danger: #b91c1c;
+      --danger-light: #fee2e2;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+      --reading-size: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .topbar {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      color: #ffffff;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+
+    .brand h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .brand p {
+      font-size: 0.8rem;
+      opacity: 0.88;
+    }
+
+    .topbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .timer-box {
+      background: rgba(15, 23, 42, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95rem;
+    }
+
+    .timer-box.warning {
+      background: #b91c1c;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.75; }
+    }
+
+    /* Container & Views */
+    .container {
+      max-width: 1360px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Start Screen */
+    .start-card {
+      max-width: 760px;
+      margin: 40px auto;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px;
+      border: 1px solid var(--border);
+    }
+
+    .start-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .start-header h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .info-item {
+      background: var(--bg);
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .info-item span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .info-item strong {
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+
+    .blueprint-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    .blueprint-box h3 {
+      font-size: 0.98rem;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+
+    .blueprint-box ul {
+      padding-left: 20px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--text-main);
+      border-color: var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg);
+    }
+
+    .btn-warning {
+      background: var(--accent-light);
+      color: #92400e;
+      border-color: #f59e0b;
+    }
+
+    .btn-warning.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background: #166534;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.82rem;
+    }
+
+    /* CBT Exam Layout */
+    .exam-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 290px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 1120px) {
+      .exam-layout {
+        grid-template-columns: 1fr 1fr;
+      }
+      .nav-panel {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .exam-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      background: #f8fafc;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .panel-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .font-controls {
+      display: flex;
+      gap: 4px;
+    }
+
+    .font-btn {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .font-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .stimulus-body {
+      padding: 22px;
+      font-size: var(--reading-size);
+      max-height: 72vh;
+      overflow-y: auto;
+    }
+
+    .stimulus-badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .stimulus-title {
+      font-size: 1.18em;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+
+    .stimulus-body p {
+      margin-bottom: 14px;
+      text-align: justify;
+    }
+
+    .stimulus-box-sub {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+
+    .stimulus-box-sub h4 {
+      color: var(--secondary);
+      margin-bottom: 6px;
+      font-size: 1em;
+    }
+
+    .poem-block {
+      font-style: italic;
+      background: #f8fafc;
+      padding: 18px 22px;
+      border-left: 4px solid var(--secondary);
+      border-radius: 8px;
+      white-space: pre-line;
+      line-height: 1.85;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 0.9em;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* Question Panel */
+    .question-body {
+      padding: 22px;
+    }
+
+    .competency-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag-komp {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .tag-indikator {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .question-text {
+      font-size: 1.03rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: var(--text-main);
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 13px 16px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: #fff;
+    }
+
+    .option-item:hover {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+
+    .option-item.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .option-letter {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: var(--text-main);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+
+    .option-item.selected .option-letter {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .question-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Navigation Grid */
+    .nav-body {
+      padding: 18px;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .nav-num {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .nav-num:hover {
+      border-color: var(--primary);
+    }
+
+    .nav-num.answered {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .nav-num.flagged {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .nav-num.current {
+      outline: 3px solid #93c5fd;
+      transform: scale(1.05);
+    }
+
+    .legend {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* Result & Review View */
+    .result-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 24px;
+    }
+
+    .score-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
+      color: #fff;
+      padding: 28px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+    }
+
+    .score-circle {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 16px;
+      padding: 16px 28px;
+      text-align: center;
+    }
+
+    .score-circle .num {
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .comp-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .comp-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      background: #f8fafc;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0 6px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 999px;
+    }
+
+    .review-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+
+    .review-item.correct {
+      border-left: 5px solid var(--success);
+    }
+
+    .review-item.wrong {
+      border-left: 5px solid var(--danger);
+    }
+
+    .explanation-box {
+      margin-top: 12px;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      border: 1px solid var(--border);
+    }
+
+    @media print {
+      .topbar, .no-print { display: none !important; }
+      .container { max-width: 100%; margin: 0; }
+      .result-card, .review-item { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-badge">CBT TKA SMP</span>
+      <div>
+        <h1>Tes Kemampuan Akademik (TKA) — Literasi Membaca</h1>
+        <p>Jenjang SMP/MTs Kelas IX • Kurikulum Nasional</p>
+      </div>
+    </div>
+    <div class="topbar-controls">
+      <div id="studentBadge" class="hidden" style="font-size: 0.88rem; opacity: 0.95;"></div>
+      <div id="timerBox" class="timer-box hidden">
+        <span>⏱️</span>
+        <span id="timerText">60:00</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 1. HALAMAN AWAL / IDENTITAS -->
+    <section id="startView" class="start-card">
+      <div class="start-header">
+        <h2>Persiapan Ujian TKA Literasi Kelas IX</h2>
+        <p style="color: var(--text-muted);">Uji kompetensi pemahaman bacaan teks informasi dan teks fiksi berbasis standar asesmen nasional.</p>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span>Jumlah Soal</span>
+          <strong>30 Pilihan Ganda</strong>
+        </div>
+        <div class="info-item">
+          <span>Alokasi Waktu</span>
+          <strong>60 Menit</strong>
+        </div>
+        <div class="info-item">
+          <span>Stimulus Bacaan</span>
+          <strong>10 Teks (Informasi & Fiksi)</strong>
+        </div>
+      </div>
+
+      <div class="blueprint-box">
+        <h3>Tujuan Pembelajaran & Kompetensi yang Diukur:</h3>
+        <ul>
+          <li><strong>Pemahaman Tekstual (10 Soal):</strong> Mengidentifikasi informasi tersurat, kosakata umum/khusus, dan struktur bagian penting teks.</li>
+          <li><strong>Pemahaman Inferensial (10 Soal):</strong> Menyimpulkan ide pokok, hubungan sebab-akibat, amanat, makna kias, serta memprediksi peristiwa.</li>
+          <li><strong>Evaluasi & Apresiasi (10 Soal):</strong> Menilai relevansi isi teks dengan kehidupan sehari-hari, membandingkan antarteks, dan mengapresiasi pilihan bahasa penulis.</li>
+        </ul>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inputNama">Nama Lengkap Peserta</label>
+          <input type="text" id="inputNama" placeholder="Contoh: Nadya Putri Maharani" />
+        </div>
+        <div class="form-group">
+          <label for="inputKelas">Kelas / Asal Sekolah</label>
+          <input type="text" id="inputKelas" placeholder="Contoh: IX-A / SMP Negeri 1" />
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="startExam()">Mulai Mengerjakan Soal →</button>
+        <button id="resumeBtn" class="btn btn-outline hidden" onclick="resumeExam()">Lanjutkan Sesi Tersimpan</button>
+      </div>
+    </section>
+
+    <!-- 2. HALAMAN UJIAN CBT -->
+    <section id="examView" class="exam-layout hidden">
+      <!-- Panel Kiri: Stimulus Bacaan -->
+      <article class="panel">
+        <div class="panel-header">
+          <span class="panel-title" id="stimulusCounter">Bacaan 1 dari 10</span>
+          <div class="font-controls" title="Atur Ukuran Teks Bacaan">
+            <button class="font-btn" onclick="changeFontSize(-1)">A-</button>
+            <button class="font-btn" onclick="changeFontSize(0)">A</button>
+            <button class="font-btn" onclick="changeFontSize(1)">A+</button>
+          </div>
+        </div>
+        <div class="stimulus-body" id="stimulusContent"></div>
+      </article>
+
+      <!-- Panel Tengah: Pertanyaan & Opsi Jawaban -->
+      <article class="panel">
+        <div class="panel-header">
+          <span class="panel-title" id="questionNumberTitle">Soal Nomor 1 dari 30</span>
+          <button id="flagBtn" class="btn btn-warning btn-sm" onclick="toggleFlag()">🚩 Ragu-ragu</button>
+        </div>
+        <div class="question-body">
+          <div class="competency-meta">
+            <span class="tag-komp" id="tagKompetensi">Pemahaman Tekstual</span>
+            <span class="tag-indikator" id="tagIndikator">Indikator Soal</span>
+          </div>
+          <div class="question-text" id="questionText"></div>
+          <div class="options-list" id="optionsContainer"></div>
+
+          <div class="question-footer">
+            <button class="btn btn-outline" id="prevBtn" onclick="navigateQuestion(-1)">← Sebelumnya</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="navigateQuestion(1)">Selanjutnya →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Panel Kanan: Navigasi Nomor Soal -->
+      <aside class="panel nav-panel">
+        <div class="panel-header">
+          <span class="panel-title">Navigasi Soal</span>
+          <span id="answeredCount" style="font-size: 0.82rem; font-weight: 700; color: var(--secondary);">0/30</span>
+        </div>
+        <div class="nav-body">
+          <div class="nav-grid" id="navGrid"></div>
+
+          <div class="legend">
+            <div class="legend-item"><span class="legend-dot" style="background: var(--primary);"></span> Sudah dijawab</div>
+            <div class="legend-item"><span class="legend-dot" style="background: var(--accent);"></span> Ditandai ragu-ragu</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #fff; border: 1px solid var(--border);"></span> Belum dijawab</div>
+          </div>
+
+          <button class="btn btn-success" style="width: 100%;" onclick="confirmSubmit()">Selesai & Kirim Jawaban</button>
+        </div>
+      </aside>
+    </section>
+
+    <!-- 3. HALAMAN HASIL & PEMBAHASAN -->
+    <section id="resultView" class="hidden">
+      <div class="result-card">
+        <div class="score-banner">
+          <div>
+            <span style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; opacity: 0.85;">Laporan Hasil Evaluasi TKA</span>
+            <h2 id="resStudentName" style="font-size: 1.6rem; margin: 4px 0;">Peserta Didik</h2>
+            <p id="resStudentClass" style="opacity: 0.9;">Kelas IX SMP</p>
+            <p id="resPredicate" style="margin-top: 10px; font-weight: 700; background: rgba(255,255,255,0.2); display: inline-block; padding: 4px 12px; border-radius: 6px;"></p>
+          </div>
+          <div class="score-circle">
+            <div style="font-size: 0.85rem; opacity: 0.9;">SKOR AKHIR</div>
+            <div class="num" id="resScore">0</div>
+            <div style="font-size: 0.85rem;" id="resDetailCount">Benar: 0 / 30</div>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom: 14px; color: var(--primary);">Analisis Capaian per Tujuan Pembelajaran (Kompetensi)</h3>
+        <div class="comp-breakdown" id="compBreakdown"></div>
+
+        <div class="no-print" style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="window.print()">🖨️ Cetak / Simpan PDF Hasil</button>
+          <button class="btn btn-outline" onclick="resetExam()">🔄 Ulangi Simulasi dari Awal</button>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <h3 style="margin-bottom: 18px; color: var(--primary);">Kunci Jawaban & Pembahasan Lengkap (30 Soal)</h3>
+        <div id="reviewContainer"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // =========================================================================
+    // DATA BANK STIMULUS & 30 SOAL TKA LITERASI KELAS IX
+    // =========================================================================
+    const stimuli = [
+      {
+        id: 1,
+        type: "Teks Informasi • Teks Eksplanasi",
+        title: "Jejak Mikroplastik di Rantai Makanan Laut",
+        html: `
+          <p>Setiap tahun, jutaan ton limbah plastik bermuara ke samudra melalui aliran sungai dan aktivitas pesisir. Paparan sinar ultraviolet matahari, gelombang laut, serta gesekan angin memecah kantong dan botol plastik tersebut menjadi serpihan berukuran kurang dari lima milimeter yang disebut <strong>mikroplastik</strong>. Karena ukurannya yang sangat kecil, partikel ini kerap menyerupai makanan alami bagi organisme laut tingkat dasar seperti zooplankton dan larva ikan.</p>
+          <p>Ketika zooplankton menelan mikroplastik, partikel sintetis beserta bahan kimia aditif yang terkandung di dalamnya tidak dapat dicerna. Akibatnya, terjadi proses <strong>bioakumulasi</strong>, yakni penumpukan zat berbahaya dalam jaringan tubuh organisme dari waktu ke waktu. Saat ikan-ikan kecil memangsa zooplankton tersebut, lalu ikan besar seperti tuna dan tongkol memangsa ikan kecil, konsentrasi mikroplastik terus meningkat pada setiap tingkatan trofik rantai makanan.</p>
+          <p>Penelitian kelautan terbaru menunjukkan bahwa partikel mikroplastik kini telah terdeteksi pada garam laut tradisional, kerang hijau, hingga beberapa jenis ikan konsumsi harian masyarakat. Meski dampak jangka panjangnya terhadap metabolisme manusia masih terus diteliti, para ahli kesehatan lingkungan mengingatkan bahwa paparan mikroplastik berpotensi memicu peradangan sel dan gangguan sistem endokrin. Oleh sebab itu, pengendalian sampah plastik dari sumber rumah tangga menjadi langkah krusial untuk memutus mata rantai pencemaran ini.</p>
+        `
+      },
+      {
+        id: 2,
+        type: "Teks Fiksi • Cerpen Realisme Remaja",
+        title: "Sepatu Kanvas di Rak Belakang",
+        html: `
+          <p>Dua hari menjelang seleksi atletik tingkat kota, Arka menatap sepatu kanvas biru tuanya yang tergeletak di rak belakang rumah. Bagian sol depannya sudah menipis, sementara jahitan di sisi kiri mulai renggang. Di sekolah, teman-teman satu timnya sudah memamerkan sepatu lari berbantalan udara yang baru dibeli orang tua mereka. Arka menelan ludah, lalu menyimpan kembali sepatu itu ke dalam tas.</p>
+          <p>Saat latihan sore di lapangan kecamatan, langkahnya terasa seberat memikul bongkahan batu. Setiap kali kakinya menjejak lintasan tanah berkerikil, Arka lebih sibuk mengkhawatirkan sol sepatunya lepas daripada mengatur ritme napas. Pelatihnya, Pak Hendra, menyadari perubahan itu. "Arka, kecepatanmu bagus, tetapi pikiranmu tidak sedang berada di lintasan," tegurnya lembut seusai latihan.</p>
+          <p>Malam harinya, Arka mendapati ayahnya duduk di teras sambil memegang jarum sol, benang nilon tebal, dan lem khusus karet. Dengan sabar, tangan ayahnya yang kasar menjahit ulang setiap celah yang terbuka dan melapisi bagian sol yang menipis dengan karet ban bekas yang dipotong rapi. "Sepatu ini memang tidak punya bantalan udara, Ka, tetapi ia sudah menemanimu berlari lima kilometer setiap pagi. Jangan kalah sebelum garis start," ujar ayahnya sambil tersenyum. Keesokan paginya, Arka melangkah ke stadion dengan dada tegap dan keyakinan baru.</p>
+        `
+      },
+      {
+        id: 3,
+        type: "Teks Informasi • Teks Jamak (Perbandingan Dua Teks)",
+        title: "Pembelajaran Berbasis Proyek di Sekolah Menengah",
+        html: `
+          <div class="stimulus-box-sub">
+            <h4>Teks A — Mengasah Keterampilan Abad ke-21</h4>
+            <p>Pembelajaran berbasis proyek (<em>Project-Based Learning</em>) memberikan ruang bagi peserta didik untuk memecahkan persoalan nyata di sekitar mereka. Alih-alih sekadar menghafal definisi dari buku teks, siswa diajak merancang solusi, berkolaborasi dalam tim, serta mempresentasikan hasil karya mereka. Melalui metode ini, kemampuan berpikir kritis, komunikasi, dan kemandirian belajar siswa meningkat secara signifikan karena mereka merasakan langsung manfaat ilmu yang dipelajari.</p>
+          </div>
+          <div class="stimulus-box-sub">
+            <h4>Teks B — Catatan Lapangan Implementasi Proyek</h4>
+            <p>Meski memiliki tujuan ideal, penerapan pembelajaran berbasis proyek di lapangan masih menghadapi sejumlah hambatan teknis. Beberapa guru mengeluhkan keterbatasan jam pelajaran untuk membimbing seluruh kelompok secara mendalam. Selain itu, di sekolah dengan fasilitas internet dan alat peraga yang terbatas, beban biaya pembuatan proyek terkadang memberatkan siswa apabila tidak dirancang menggunakan bahan daur ulang yang mudah dijangkau.</p>
+          </div>
+        `
+      },
+      {
+        id: 4,
+        type: "Teks Informasi • Teks Prosedur Kompleks",
+        title: "Mengolah Sampah Dapur dengan Keranjang Takakura",
+        html: `
+          <p>Metode Takakura merupakan teknik pengomposan sampah organik skala rumah tangga yang praktis, higienis, dan tidak menimbulkan bau menyengat jika dilakukan sesuai prosedur. Berikut tahapan penerapannya:</p>
+          <p><strong>1. Penyiapan Keranjang Aerasi:</strong> Gunakan keranjang berlubang agar sirkulasi udara berjalan lancar. Lapisi dinding bagian dalam keranjang dengan kardus bekas untuk mencegah serangga masuk sekaligus menjaga kelembapan.</p>
+          <p><strong>2. Pembuatan Bantalan Mikroba:</strong> Letakkan bantalan berisi sekam bakar di dasar keranjang, lalu tambahkan kompos jadi sebagai starter mikroorganisme pengurai. Sekam bakar berfungsi menyerap kelebihan air dan bau, sedangkan mikroba mempercepat proses pelapukan.</p>
+          <p><strong>3. Pemilahan dan Pencacahan Sampah:</strong> Masukkan sisa sayuran, kulit buah, atau nasi sisa yang telah dicacah kecil (ukuran 1–2 cm). <em>Hindari memasukkan tulang hewan besar, daging berlemak, serta minyak goreng</em> karena sulit terurai dan dapat memicu pembusukan anaerob.</p>
+          <p><strong>4. Pemantauan Suhu dan Pemanenan:</strong> Aduk campuran setiap dua hari sekali. Proses penguraian aktif ditandai dengan suhu bagian dalam keranjang yang hangat berkisar <strong>40°C–60°C</strong>. Setelah 3–4 minggu, kompos matang siap dipanen apabila warnanya telah berubah cokelat kehitaman, bertekstur remah seperti tanah, dan berbau harum tanah hutan.</p>
+        `
+      },
+      {
+        id: 5,
+        type:
